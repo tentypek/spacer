@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Spacer</h1>
+    <h1>Spacer tet</h1>
   </div>
 </template>
 
