@@ -45,7 +45,7 @@ export default {
         padding: 30px;
         width: 100%;
         height: 100vh;
-        background-image: url('../assets/heroimage.jpg');
+        background-image: url('./assets/heroimage.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: 80% 0%;

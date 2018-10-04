@@ -1,42 +1,32 @@
 s<template>
-  <div class="search-wrapper">
-      <div class="search">
-          <!-- <label for="search">Search</label> -->
-          <input id="search" name="search" v-model="searchValue" @input="handleInput" />
-          <!-- <ul>
-              <li v-for="item in results" :key="item.data[0].nasa_id">
-                   <p> {{ item.data[0].description }} </p> 
-              </li>
-          </ul> -->
-      </div>
-    </div>
+        <input 
+            id="search" 
+            name="search" 
+            :class="{ dark }"
+            :value="value"
+            @input="handleChange"
+        />
 </template>
 
 <script>
-import axios from 'axios';
-import debounce from 'lodash.debounce';
-
-const API = 'https://images-api.nasa.gov/search';
 
 export default {
   name: 'SearchInput',
-  data() {
-      return {
-          searchValue: '',
-          results: [],
+  props: {
+      value: {
+        type: String,
+        required: true,
+      },
+      dark: {
+          type: Boolean,
+          default: false,
       }
+      
   },
   methods: {
-      handleInput: debounce(function(){
-          axios.get(`${API}?q=${this.searchValue}&media_type=image`)
-            .then((response) => {
-                this.results = response.data.collection.items;
-            })
-
-            .catch((error) => {
-                console.log(error);
-            });
-      }, 500),
+      handleChange(e) {
+          this.$emit('input', e.target.value);
+      },
   },
   
 };
@@ -44,28 +34,40 @@ export default {
 
 <style lang="scss" scoped>
 
-    .search-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0;
-        padding: 30px;
-        width: 100%;
-        
-    }
-    .search {
-        display: flex;
-        flex-direction: column;
-        width: 250px;
 
         input {
+            margin-top: 50px;
+            display: flex;
+            width: 250px;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 300;
             height: 30px;
             border: 0;
-            border-bottom: 1px solid black;
-            margin-top: 50px;
             background: none;
+            border-bottom: 1px solid white;
+            transition: box-shadow .3s ease-out;
+
+            @media (min-width: 1024px) {
+                font-weight: 400;
+            }
+
         }
-    }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 10px 20px -8px rgba(255,255,255,.3);
+        }
+
+        .dark {
+            color: #1e3d4a;
+            border-bottom-color: #1e3d4a;
+        }
+        .dark:focus {
+            box-shadow: 0 10px 20px -8px rgba(#1e3d4a, 0.2);
+        }
+  
 
 </style>
 
